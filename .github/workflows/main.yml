@@ -19,6 +19,11 @@ jobs:
   Linting:
     runs-on: ubuntu-latest
     needs: Build
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
     steps:
       - name: Download code
         uses: actions/download-artifact@v4
@@ -28,5 +33,5 @@ jobs:
       - name: Run linting
         uses: super-linter/super-linter/slim@v6
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
           DISABLE_ERRORS: true
